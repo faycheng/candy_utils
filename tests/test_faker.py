@@ -21,3 +21,11 @@ def test_random_upper_str():
     assert len(s) == 10
 
 
+def test_number_str():
+    n = faker.random_number_string()
+    assert n.isdigit() is True
+
+    n = faker.random_number_string(length=10)
+    assert len(n) == 10
+
+    
