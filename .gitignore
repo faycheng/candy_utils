@@ -1,6 +1,7 @@
 
 ### PyCharm ###
 .idea/
+.cache
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
