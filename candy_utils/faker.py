@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import random
 import uuid
+import types
 import string
 
 
@@ -26,7 +27,8 @@ def random_uuid():
 
 
 def random_enum(enum_list=None):
-    assert enum_list is not None and isinstance(enum_list, list)
+    if isinstance(enum_list, types.GeneratorType):
+        return random.choice(list(enum_list))
     return random.choice(enum_list)
 
 
