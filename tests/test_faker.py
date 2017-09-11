@@ -65,3 +65,6 @@ def test_random_enum():
             faker.random_enum(enums)
 
 
+def test_random_number():
+    n = faker.random_number(1, 10)
+    assert 1 <= n <= 10
