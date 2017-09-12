@@ -1,0 +1,3 @@
+[submodule "candy/submodules/candy_enums"]
+	path = candy/submodules/candy_enums
+	url = https://github.com/faycheng/candy_enums.git
