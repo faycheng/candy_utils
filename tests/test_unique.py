@@ -1,7 +1,9 @@
 # -*- coding:utf-8 -*-
 
 import pytest
+import types
 
+from unittest import mock
 from candy_utils import faker
 from candy_utils import unique
 
@@ -34,10 +36,41 @@ def test_compare():
     setattr(another, 'compare_func', another_compare_func)
     assert unique._compare(item, another, 'compare_func', True) is True
 
+    item = Item()
+    another = Item()
+    unique._compare(item, another, faker.random_string(), False) is False
+
 
 def test_iter():
-    pass
+    with mock.patch.object(unique, '_compare', return_value=False):
+        l = [1, 2, 3]
+        res = unique._iter(l, None, False)
+        assert isinstance(res, types.GeneratorType)
+        res = list(res)
+        assert len(res) == 3
+        assert set(res) == set(l)
 
 
 def test_unique():
-    pass
+    def func():
+        return [1, 2, 3, 2]
+    res = unique.unique(None, False)(func)()
+    assert isinstance(res, types.GeneratorType)
+    res = list(res)
+    assert len(res) == 3
+    assert set(res) == set([1, 2, 3])
+
+    def func():
+        for i in [1, 2, 3, 2]:
+            yield i
+    res = unique.unique(None, False)(func)()
+    assert isinstance(res, types.GeneratorType)
+    res = list(res)
+    assert len(res) == 3
+    assert set(res) == set([1, 2, 3])
+
+    def func():
+        return 'hello world'
+    res = unique.unique(None, False)(func)()
+    assert res == 'hello world'
+
