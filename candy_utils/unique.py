@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
+import types
 from functools import wraps
-from collections import Iterable
 
 
 def _compare(item, another, attr, callable):
@@ -16,6 +16,7 @@ def _compare(item, another, attr, callable):
 
 
 def _iter(obj, attr, callable):
+    obj = sorted(obj)
     last = object()
     for item in obj:
         if _compare(item, last, attr, callable):
@@ -29,9 +30,8 @@ def unique(attr=None, callable=False):
         @wraps(func)
         def inner(*args, **kwargs):
             res = func(*args, **kwargs)
-            if not isinstance(res, Iterable):
+            if not (isinstance(res, list) or isinstance(res, types.GeneratorType)):
                 return res
-            res = sorted(res)
             return _iter(res, attr, callable)
 
         return inner
