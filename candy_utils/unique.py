@@ -7,7 +7,10 @@ from functools import wraps
 def _compare(item, another, key_func=None):
     if key_func is None:
         return item == another
-    return key_func(item) == key_func(another)
+    try:
+        return key_func(item) == key_func(another)
+    except AttributeError:
+        return False
 
 
 def _iter(obj, key_func=None):
