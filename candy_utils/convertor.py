@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from candy.enums.boolstrs import BoolStrs
+from candy_enums.boolstrs import BoolStrs
 
 
 def str2boo(str, strict=True):
